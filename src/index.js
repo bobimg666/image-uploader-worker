@@ -13,22 +13,32 @@
 const MAX_FILE_SIZE_MB = 5; // 限制上传文件大小 (例如 5MB)
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-// 辅助函数：创建错误响应
+// 辅助函数：创建错误响应 (如果尚未在外部定义)
 function createErrorResponse(message, status) {
     return new Response(JSON.stringify({ success: false, error: message }), {
         status: status,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, // 允许跨域
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
 }
 
-// 辅助函数：创建成功响应
+// 辅助函数：创建成功响应 (如果尚未在外部定义)
 function createSuccessResponse(data, status = 200) {
     return new Response(JSON.stringify({ success: true, ...data }), {
         status: status,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }, // 允许跨域
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     });
 }
 
+// 辅助函数：ArrayBuffer to Base64 (保持不变)
+function arrayBufferToBase64(buffer) {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
 // GitHub API 基础 URL
 const GITHUB_API_BASE = 'https://api.github.com';
 
@@ -209,29 +219,4 @@ export default {
     },
 };
 
-// 辅助函数：创建错误响应 (如果尚未在外部定义)
-function createErrorResponse(message, status) {
-    return new Response(JSON.stringify({ success: false, error: message }), {
-        status: status,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-    });
-}
 
-// 辅助函数：创建成功响应 (如果尚未在外部定义)
-function createSuccessResponse(data, status = 200) {
-    return new Response(JSON.stringify({ success: true, ...data }), {
-        status: status,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-    });
-}
-
-// 辅助函数：ArrayBuffer to Base64 (保持不变)
-function arrayBufferToBase64(buffer) {
-    let binary = '';
-    const bytes = new Uint8Array(buffer);
-    const len = bytes.byteLength;
-    for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-    }
-    return btoa(binary);
-}
