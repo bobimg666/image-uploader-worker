@@ -1,0 +1,22 @@
+name = "image-uploader-worker" # Worker 的名称
+main = "src/index.js"           # Worker 入口文件
+compatibility_date = "2024-05-27" # 当前或更新的兼容日期
+compatibility_flags = ["nodejs_compat"] # 如果需要 Node.js API
+
+# 环境变量 (Secrets) - 你需要在 Cloudflare Dashboard 设置这些
+# GITHUB_PAT = "你的新GitHub PAT"
+# GITHUB_REPO_OWNER = "bobimg666"
+# GITHUB_REPO_NAME = "jxtw-img"
+# GITHUB_MAIN_BRANCH = "main" # 或者你的主分支名，如 "master"
+# COMMIT_AUTHOR_NAME = "Image Uploader Bot"
+# COMMIT_AUTHOR_EMAIL = "image-bot@example.com" # 机器人提交邮箱
+# CDN_BASE_URL = "https://cdn.jsdelivr.net/gh" # 例如 jsDelivr
+
+[vars]
+# 可以放一些非敏感的配置
+DEFAULT_USER_IDENTIFIER = "shared" # 如果没有提供用户标识，默认上传到的分支/目录
+
+# 如果你的 Worker 需要绑定 KV, R2 等，在这里添加
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "your-kv-namespace-id"
